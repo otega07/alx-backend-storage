@@ -11,7 +11,6 @@ redis_store = redis.Redis()
 """The module-level Redis instance.
 """
 
-
 def data_cacher(method: Callable[[str], str]) -> Callable[[str], str]:
     """Caches the output of fetched data.
     """
@@ -31,9 +30,8 @@ def data_cacher(method: Callable[[str], str]) -> Callable[[str], str]:
         result = method(url)
         redis_store.setex(f'result:{url}', 10, result)
         return result
-    
-    return invoker
 
+    return invoker
 
 @data_cacher
 def get_page(url: str) -> str:
