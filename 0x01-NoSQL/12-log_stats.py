@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Script that provides stats about Nginx logs stored in MongoDB."""
+"""
+Script that provides stats about Nginx logs stored in MongoDB.
+
+The script connects to a MongoDB server, accesses the 'logs' database,
+and retrieves stats from the 'nginx' collection. It then prints the
+number of logs, counts for each HTTP method, and the number of logs
+with method 'GET' and path '/status'.
+"""
+
 from pymongo import MongoClient
 
 
@@ -38,12 +46,11 @@ def run():
 if __name__ == '__main__':
     run()
 
-# Start MongoDB from command line
-# mongo
-require 'establish_connection' 
-
-# Everything is documented with comments and explanations in the script file.
+# Instructions to Start MongoDB: Run 'mongo' command in a terminal to start MongoDB.
+# Ensure that the MongoDB server is running before running this script.
+# Replace 'mongodb://127.0.0.1:27017' with the appropriate connection string.
+# The script will display stats about the Nginx logs stored in the 'nginx' collection.
 
 # Check for conditions: Collection nginx empty, with 1 document, with 10 documents, with a lot of documents.
 
-# Stop MongoDB: exit
+# Instructions to Stop MongoDB: Use 'exit' in the MongoDB shell to stop the MongoDB server.
