@@ -1,30 +1,39 @@
 #!/usr/bin/env python3
-"""Task 12
-"""
+"""Script that provides stats about Nginx logs stored in MongoDB."""
 from pymongo import MongoClient
 
 
-def main():
-    # Connect to the MongoDB database
-    client = MongoClient('mongodb://127.0.0.1:27017/')
-    db = client['logs']
-    collection = db['nginx']
+def print_nginx_request_logs(nginx_collection):
+    """Prints stats about Nginx request logs."""
+    # Number of logs
+    log_count = nginx_collection.count_documents({})
+    print(f'{log_count} logs')
 
-    # Get the total number of documents
-    total_logs = collection.count_documents({})
-    print(f"{total_logs} logs")
-
-    # Methods statistics
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    print("Methods:")
-
+    # Number of logs for each HTTP method
+    print('Methods:')
+    methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     for method in methods:
-        method_count = collection.count_documents({"method": method})
-        print(f"\t{method}: {method_count}")
+        count = nginx_collection.count_documents({'method': method})
+        print(f'\tmethod {method}: {count}')
 
-    # Count for specific condition: method=GET and path=/status
-    status_count = collection.count_documents({"method": "GET", "path": "/status"})
-    print(f"GET /status: {status_count}")
+    # Number of logs where method is GET and path is /status
+    status_check_count = nginx_collection.count_documents(
+        {'method': 'GET', 'path': '/status'}
+    )
+    print(f'{status_check_count} status check')
 
-if __name__ == "__main__":  
-    main()
+
+def run():
+    """Connects to MongoDB and retrieves stats."""
+    # Connecting to the MongoDB server
+    client = MongoClient('mongodb://127.0.0.1:27017')
+
+    # Accessing the database and collection
+    nginx_collection = client.logs.nginx
+
+    # Printing the request logs stats
+    print_nginx_request_logs(nginx_collection)
+
+
+if __name__ == '__main__':
+    run()
