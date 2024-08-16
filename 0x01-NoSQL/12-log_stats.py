@@ -37,3 +37,13 @@ def run():
 
 if __name__ == '__main__':
     run()
+
+# Start MongoDB from command line
+# mongo
+require 'establish_connection' 
+
+# Everything is documented with comments and explanations in the script file.
+
+# Check for conditions: Collection nginx empty, with 1 document, with 10 documents, with a lot of documents.
+
+# Stop MongoDB: exit
