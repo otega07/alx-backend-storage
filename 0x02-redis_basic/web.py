@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""task module with tools for request caching and tracking.
+"""Task module with tools for request caching and tracking.
 """
 import redis
 import requests
@@ -12,7 +12,7 @@ redis_store = redis.Redis()
 """
 
 
-def data_cacher(method: Callable) -> Callable:
+def data_cacher(method: Callable[[str], str]) -> Callable[[str], str]:
     """Caches the output of fetched data.
     """
     @wraps(method)
